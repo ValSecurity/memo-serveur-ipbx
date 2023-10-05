@@ -43,7 +43,7 @@ Pour ce faire, allez dans l'onglet admin et cliquer sur module admin. Une fois c
 4. cliquer sur **confirm**
 5. cliquer sur **apply config** en haut à droite de la page.
 ### Uploader un enregistrements personalisé:
-Pour pouvoir mettre une annonce personalisée aller dans l'onglet admin et cliquer sur **system recording**. Cliquer ensuite sur le bouton **add recording**. Puis donner un nom à votre enregistrement. Ajouter ensuite une description, choisissez la langue de votre enregistrement, vous pouvez soit choisir un enregistrement prédefinie soit parcourir vos fichier pour mettre un enregistrement personalisé. *note: faite attention au format de votre audio car il peut ne pas être lisble pour le serveur*
+Pour pouvoir mettre une enregistrement personalisée aller dans l'onglet admin et cliquer sur **system recording**. Cliquer ensuite sur le bouton **add recording**. Puis donner un nom à votre enregistrement. Ajouter ensuite une description, choisissez la langue de votre enregistrement, vous pouvez soit choisir un enregistrement prédefinie soit parcourir vos fichier pour mettre un enregistrement personalisé. *note: faite attention au format de votre audio car il peut ne pas être lisble pour le serveur*
 ### Créer une annonce personalisée:
 *note: cela nécéssite d'avoir fait la procédure au dessus*
 Rendez-vous dans l'onglet **Applications** puis cliquer sur **Announcements** cliquer ensuite sur le bouton **Add**. Veuillez ensuite remplir les champs ci-dessous:
@@ -57,4 +57,41 @@ Rendez-vous dans l'onglet **Applications** puis cliquer sur **Announcements** cl
 Dans l'onglet application, cliquer sur **queues** appuyez ensuite sur **Add Queues**. cela vous demandera en suite de remplir les champs suivant:
 1. Queue Number: numéro a faire pour pouvoir transferer l'appelant sur la file d'attente.
 2. Queue Name: nom de la fille d'attente.
-3. Queue no answer: Desactiver la possibilité de répondre a l'apel.
+3. Queue no answer: Desactiver la possibilité de répondre a l'appel.
+4. Call confirm: L'appelant sera forcé de confirmer son appel.
+5. Call confirm Announce: Un enregistrement pour confirmer que l'appel a bien était pris en compte.
+6. CID Name Prefix: Préfixe du nom de l'appelant par exmple "Attente: John Smith"
+7. Wait Time Prefix: Le temps d'attente sera ajouté au préfixe du nom de l'appelant
+8. Alert info: Une alerte informant qu'un nouvelle appelant est dans file d'attente
+9. Ringer volume override: configurer l'amplification le volume de la sonnerie. *note: cela n'est possible qu'avec des téléphone Sangoma*
+10. Ringer Volume Override Mode: activer l'amplification du volume de la sonnerie.
+11. Restric Dynamic Agents: Les appelants ne pourront pas être en contact avec un agent non listé.
+12. Agent Restrictions: Choisir agents vers les lequels les appelants ne seront pas rediriger.
+13. Ring Strategy: choisir la stratégie de sonnerie (cet à dire décider de par exemple faire sonner sur tout les téléphones)
+14. Autofill: transfert automatique de l'appelant vers un agents disponible.
+15. Skip Busy Agents: Les agents occupés seront passés par les appelants.
+16. Queue Weight: définir le niveaux de priorité de la fille d'attente.
+17. Music on Hold Class: Configuration de la musique d'attente.
+18. Join Announcement: Configuartion de l'anonce quand l'appelant rejoin la file d'attente.
+19. Call Recording: Définir si l'appel est enregistré ou non.
+20. Mark calls answered elsewhere: si un appelant annule son appel, l'appel sera quand même marqué comme répondu.
+21. Fail Over destination: destination en cas d'echecs.
+### Creation d'un IVR:
+Dans l'onglet application, cliquer sur **IVR** puis **Add IVR**. Il faudra ensuite remplir les champs ci-dessous:
+1. IVR name: Nom de l'IVR
+2. IVR Description: Description de l'IVR
+3. Announcement: annonce a diffusé dans l'IVR
+4. Enable Direct Dial: Activer la ligne directe
+5. Force Stric Dial Timeout: fonctionnement de l'ivr uniquement avec les premières touches ou avec toutes.
+6. Timeout: Nombre de temps avant que le delai d'attente sois dépasser.
+7. Alert Info: Alerte en cas d'erreur
+8. Ringer volume override: configurer l'amplification le volume de la sonnerie. *note: cela n'est possible qu'avec des téléphone Sangoma*
+9. Invalid Retries: nombre de tentives quand la réponse de l'appelant est invalide.
+10. Invalid Retry Recording: Enregistrement diffusé quand la réponse de l'appelant est incorecte.
+11. Append Announcement to Invalid: Rejouer l'enregistrement de l'IVR en cas de réponse invalide.
+12. Return on Invalid: Possiblité de retourné à l'IVR parent.
+13. Invalid Recording: Enregistrement diffusé pour aller dans une destination alternative.
+14. Invalid Destination: Destination où l'appelant est envoyé quand la destination est invalide.
+15. Timeout Retries: nombre d'essaie en cas de delai dépassé.
+16. Timeout Retry Recording: Enregistrement diffusé une fois que les essai sont épuisé.
+
