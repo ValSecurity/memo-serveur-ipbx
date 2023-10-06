@@ -109,7 +109,7 @@ Si **Loose**, expulsion de file d'attente si aucun agent disponible.
 6. Repeat Frequency: Fréquence de répétition de l'annonce de l'ivr.
 #### Advanced Options:
 1. Service Level: statistiques du temps de réponse dans la file d'attente
-2. Agent Regex Filter: filtrer les agens non concerné par la file d'attente.
+2. Agent Regex Filter: filtrer les agents non concerné par la file d'attente.
 #### Reset Queue Stats: 
 -Stats Reset: Reinitialiser les statisques de la file d'attente.
 ### Creation d'un IVR:
@@ -154,4 +154,34 @@ Le time Groups permet de définir une ou plusieur periode dans la laquelle la co
 #### Utilisation du Calendar:
 Contrairement au Time groups, ce dernier nécéssite d'aller directements dans l'onglets applications, puis de cliquer sur **Calendar** cliqeur en suite sur **Add Calendar** puis sur **Add Local Calendar**. Nommer le calendrier puis mettez y une description et enfin, Selectionez votre Zone de Temps. Une fois cela fait cliquer sur **submit** puis **applyconfig**
 Une fois cela fait, la liste de vos calendrier apparaitra, cliquez sur l'icone de crayon pour le modifier. Une fois cela fait votre calendrier vas aparaître, cliquer sur le bouton en à gauche pour rajoutez un evenement puis remplisser les champs demander comme le jour, l'heure, si ce la doit se répêter etc... . Une fois cela fait vous pourrez crée votre time conditions et ainsi selectioner dans le champ mode: **Calendar Mode** et selectioner votre calendrier dans le champs en-dessous. *tips: il est préférable de faire un time groups pour programmer des horraires habituelles et d'utiliser le calendrier pour programmer un evenement tel qu'un rdv*.
-
+### Créations d'extensions:
+Les extensions permettent de rajouter des téléphones pour les agents (Les téléphones des employées afin de pouvoir répondre et passer des appels ). Dans notre cas nous allons utiliser l'application mobile **Zoiper**. Cet application permet d'avoir un téléphone virtuel sur un téléphone portable ou sur pc afin de ne pas avoir a acheter de téléphone fixe.
+#### Ajouts d'extensions: 
+Pour se faire, allez dans l'onglet applications puis cliquez sur **Extension** cliquez ensuite sur **Add Extensions** puis
+**Add New SIP \[chan_pjsip] Extension**. Puis remplisser les différents champs dans les différent onglets suivants:
+#### General:
+1. User Extension: Extension de l'utilisateur par exmple "100" *notes: Cette extensions corespondra au numéro à taper afin de pouvoir contacter l'utilisateur en interne.*
+2. Display Name: Nom de l'utilisateur par exmple: "John Smith"
+3. Outbond CID: ID de l'appelant pour sortir du réseaux de l'entreprise.
+4. Emergency CID: ID d'un numéro d'urgence.
+5. Secret: Mots de passe utiliser pour se connecter a l'extensions.
+7. Select User Directory: Selectioner le chemin utilisateur
+8. Link to a Default User: Créer un nouvel utilisateur ou utiliser un compte existant
+9. Username: Nom d'utilisateur
+10. Password for new user: Mots de passe en cas de création de compte.
+11. Groups: Définir un groupes d'utilisateur.
+#### Voicemail: 
+1. Enable: activer les messages vocaux
+2. Voicemail Password: Mots de passe pour accèder au système de messages vocaux.
+3. Require From Same Extension: Les autres extensions peuvent lire les messages vocaux.
+4. Disable (/*) in Voicemail Menu: Desactiver la touche (*) dans les messages vocaux.
+5. Email Address: Adresse email ou les message vocaux sont envoyer.
+6. Pager Email Address: adresse email du pager pour reçevoir les notifications.
+7. Email Attachment: joindre les message vocaux au emails.
+8. Play CID: citer le numéro de l'appelant dans les message vocaux.
+9. Play Envelope: citer la date et l'heure de l'enregistrement du message.
+10. Delete Voicemail: Supprimer les messages vocaux aprés avoir était envoyé par email.
+11. VM Options: Options a rajouter 
+12. VM Context: Contexte des messages vocaux *notes: Attention modifier ce paramètre peut être risquer* 
+### Créer un trunks: 
+Les trunks Permettent d'acheminer les entrants et sortants. Il existent plusieurs protocoles de trunks tous commes les extensions.
