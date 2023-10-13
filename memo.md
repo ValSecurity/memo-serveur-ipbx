@@ -44,6 +44,12 @@ Pour ce faire, allez dans l'onglet admin et cliquer sur module admin. Une fois c
 5. cliquer sur **apply config** en haut à droite de la page.
 ### Uploader un enregistrements personalisé:
 Pour pouvoir mettre une enregistrement personalisée aller dans l'onglet admin et cliquer sur **system recording**. Cliquer ensuite sur le bouton **add recording**. Puis donner un nom à votre enregistrement. Ajouter ensuite une description, choisissez la langue de votre enregistrement, vous pouvez soit choisir un enregistrement prédefinie soit parcourir vos fichier pour mettre un enregistrement personalisé. *note: faite attention au format de votre audio car il peut ne pas être lisble pour le serveur. Aprés chaque configuration, il faudras souvent appuyer sur **submit** puis en hauts de la page **apply config**.*
+### Ajouter des musiques de fond:
+Les musique de fond servent à faire patienter l'appelant dans une fille d'attente ou encore un IVR. Pour rajouter une musique de fond aller dans l'onglet Settings puis **Music on Hold**. Selection ensuite la catégorie default en cliquant sur le logo de crayon ou créer en une nouvelle en appuyant sur **Add Category**. Remplisser ensuite les champs suivant:
+1. Type: Files: selectioner un ou plusieurs fichiers audio.
+         Custom Application: selectioner un application diffusant de la musique.
+2. Enable Random Play: Activer la lecture aleatoire des fichier audio.
+3. Upload Recording: Si dans le champ **Type** des **Files**
 ### Créer une annonce personalisée:
 *note: cela nécéssite d'avoir fait la procédure au dessus*
 Rendez-vous dans l'onglet **Applications** puis cliquer sur **Announcements** cliquer ensuite sur le bouton **Add**. Veuillez ensuite remplir les champs ci-dessous:
@@ -155,7 +161,7 @@ Le time Groups permet de définir une ou plusieur periode dans la laquelle la co
 Contrairement au Time groups, ce dernier nécéssite d'aller directements dans l'onglets applications, puis de cliquer sur **Calendar** cliqeur en suite sur **Add Calendar** puis sur **Add Local Calendar**. Nommer le calendrier puis mettez y une description et enfin, Selectionez votre Zone de Temps. Une fois cela fait cliquer sur **submit** puis **applyconfig**
 Une fois cela fait, la liste de vos calendrier apparaitra, cliquez sur l'icone de crayon pour le modifier. Une fois cela fait votre calendrier vas aparaître, cliquer sur le bouton en à gauche pour rajoutez un evenement puis remplisser les champs demander comme le jour, l'heure, si ce la doit se répêter etc... . Une fois cela fait vous pourrez crée votre time conditions et ainsi selectioner dans le champ mode: **Calendar Mode** et selectioner votre calendrier dans le champs en-dessous. *tips: il est préférable de faire un time groups pour programmer des horraires habituelles et d'utiliser le calendrier pour programmer un evenement tel qu'un rdv*.
 ### Créations d'extensions:
-Les extensions permettent de rajouter des téléphones pour les agents (Les téléphones des employées afin de pouvoir répondre et passer des appels ). Dans notre cas nous allons utiliser l'application mobile **Zoiper**. Cet application permet d'avoir un téléphone virtuel sur un téléphone portable ou sur pc afin de ne pas avoir a acheter de téléphone fixe.
+Les extensions permettent de rajouter des téléphones pour les agents (Les téléphones des employées afin de pouvoir répondre et passer des appels ). Dans notre cas nous allons utiliser l'application mobile **Zoiper**. Cette application permet d'avoir un téléphone virtuel sur un téléphone portable ou sur pc afin de ne pas avoir a acheter de téléphone fixe.
 #### Ajouts d'extensions: 
 Pour se faire, allez dans l'onglet applications puis cliquez sur **Extension** cliquez ensuite sur **Add Extensions** puis
 **Add New SIP \[chan_pjsip] Extension**. Puis remplisser les différents champs dans les différent onglets suivants:
@@ -164,7 +170,7 @@ Pour se faire, allez dans l'onglet applications puis cliquez sur **Extension** c
 2. Display Name: Nom de l'utilisateur par exmple: "John Smith"
 3. Outbond CID: ID de l'appelant pour sortir du réseaux de l'entreprise.
 4. Emergency CID: ID d'un numéro d'urgence.
-5. Secret: Mots de passe utiliser pour se connecter a l'extensions.
+5. Secret: Mots de passe utiliser pour se connecter a l'extensions. *note: Absolument changer le mots de passe*
 7. Select User Directory: Selectioner le chemin utilisateur
 8. Link to a Default User: Créer un nouvel utilisateur ou utiliser un compte existant
 9. Username: Nom d'utilisateur
@@ -183,5 +189,52 @@ Pour se faire, allez dans l'onglet applications puis cliquez sur **Extension** c
 10. Delete Voicemail: Supprimer les messages vocaux aprés avoir était envoyé par email.
 11. VM Options: Options a rajouter 
 12. VM Context: Contexte des messages vocaux *notes: Attention modifier ce paramètre peut être risquer* 
+#### Utilisation de zoiper
+Pour commencer installer Zoiper sur votre Pc en suivant ce lien: https://www.zoiper.com/en/voip-softphone/download/current ou sur votre téléphone en passant par le appstore ou le play store en passant celon votre OS.
+Une fois Zoiper installé, une connexion vous sera demander. *Attention: ne pas créer de compte car cela nécistera d'acheter un fournisseur.* Choisissez donc l'option se connecter, mettez dans nom d'utilisateur votre extension créer sur l'interface suivi d'un @ et de votre serveur sip (mettez l'ip qui correspond a votre serveur). Voici un exemple: extensions@192.168.0.10 . Pour le mots de passe, mettez celui que vous avez mis dans le champs **secret** de votre extension. Une fois cela fait, l'application vas rechercher votre serveur afin de s'y connecter. *note: il se peut que votre application ne se connecte pas au serveur car vous n'avez pas changer le mots de passe de votre extensions*
 ### Créer un trunks: 
-Les trunks Permettent d'acheminer les entrants et sortants. Il existent plusieurs protocoles de trunks tous commes les extensions.
+Les trunks Permettent d'acheminer les appels entrants et sortants. Il existent plusieurs protocoles de trunks tous commes les extensions. Dans notre cas, nous allons choisir le protocoles **SIP** tout comme nos extensions. Pour ce faire rendez-vous dans connectivity, choisissez ensuite **trunks** puis cliquez sur **Add Trunk** puis **Add SIP (chang_pjsip) Trunk**. Voici ensuite les champs suivants à remplir selon ce la ligne que vous à fourni votre fournisseur:
+#### General: 
+1. Trunk Name: Nom du Trunk.
+2. Hide CallerID: Cacher le numéro de l'appelant 
+3. Outbond CallerID: Numéro que le destinataire vera l'hors d'un appel sortant.
+4. CID Options: Authorisation des numéro hors du trunk.
+5. Maximum Channels: Nombre d'appel simultané sortant .
+6. Asterisk Trunk Dial Options: Commande Asterisk à utiliser lors des appels hors du trunk pour remplacer les paramétre par défauts.
+7. Continue if Busy: En cas d'echec continuer vers le trunk suivant.
+8. Disable Trunk: Desactiver le trunk
+9. Monitor Trunk Failures: Script pour envoyer des logs par email en cas de problémes.
+#### Dialed Number Manipulation Rules: 
+Cet onglet s'apparante au régles de composition des numéro ici nous allons entrer les numéro d'urgence a mettre afin que l'entreprise puis appeler ces derniers en cas d'urgences. Une fois dans cet Onglets, cliquer sur le bouton **Dial patterns wizards** une fois cela fait une page s'ouvrira. Selectionnez uniquement **10 Digit Patterns** puis cliquer sur Generate Routes en bas à droite. Une fois cela fait vous verrez que des routes d'urgences ce sont genérer avec des numéros d'urgence provenat des états unis remplacez-les par les numéro d'urgence français puis dans la dernier case remplisser la case préfixe à gauche par un nombre au hazard puis mettez 10 X correspondant au nombre de chiffre dans un numéros Français.
+#### pjsip Settings: 
+1. Username: Nom d'utilisateur *note: cela doit corespondre à un série de chiffre comme ceci: 0033XXXXXXXXXX
+2. Auth username: nom d'autentification *notes: à ne remplir uniquement si cela diffère du nom d'utilisateur*
+3. Secret: Mots de passe corespondant à a votre ligne
+4. Authentication: Autorisation des autentification d'autres serveurs.
+5. Registration: Envoyer ou reçevoir le registre
+6. Language Code: Language utiliser par les enregistrement de voix.
+7. SIP Server: Adresse de votre serveur SIP.
+8. SIP Server Port: Port d'ecoute de votre serveur SIP.
+9. Context: Context à envoyer à l'appel entrant. *note: pour une bon fonction: mettre "from-pstn-toheader"
+10. Transport: Le transport utiliser à la connection.
+### Créer une inbound route: 
+Une inbound routes est une routes entrante ou arriveront les appel qui viennent de l'exterieur. Exemple d'utilisation: l'appelant arrive sur un ivr quand il l'appele le numéro associé. Rendez vous dabord dans connectivity puis ensuite **Inbounds Routes** Puis **Add Inbounds Routes**, remplisser les champs suivants:
+1. Description: description de la route.
+2. DID Number: numéro à composer pour pouvoir appeler (mettre le numéro de la ligne fournis par votre fournisseur)
+3. CallerID Number: Définir le numéro de l'appelant corespondant, laisser se champs vide pour que n'importe quelle numéros correspondent.
+4. CID Priority Route: si oui: Priorité au numéro correspondant a cette route.
+5. Alert info: Alerte pouvant être utiliser pour des appareil SIP distinct.
+6. Ringer Volume Override: Remplacement du volume de la sonnerie.
+7. CID name prefix: Définir un préfix au numéro des appelants par exemple: Boutique: John.
+8. Music on Hold: definir la musique en fond.
+10. Set destination: destination de la route entrante. *note: si vous voulez que la destination dépande des horraire mettez votre time condition qui redirigera l'appelant en fonction de l'heure.*
+### Créer une outbound route: 
+Une outbound route est une une route de sortie permettant au agents (employés) d'appeler des personne exterieure. Par exemple permettre à un employé d'appeler un clients. Pour cela dans l'onglet Connectivity cliquer sur **Outbounds Routes** puis cliquer sur **Add Outbonds Routes**. Remplisser ensuite les champs suivants:
+1. Route Name: Sortie
+2. Route CID: Numéro que le client verra lors d'un appel entrant de la part d'un agent.
+3. Override Extensions: Remplacer le numéro de l'extension de l'agent affiché lors d'un appel par le numéro de la route sortante.
+4. Route Password: mots de passe à définir pour faire un appel sortant (non obligatoire)
+5. Route Type: Type de la route: route d'urgence ou route intra-Companie
+6. Music on hold?: Musique en fond à définir (voir)
+
+
