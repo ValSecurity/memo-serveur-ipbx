@@ -272,6 +272,81 @@ Une outbound route est une une route de sortie permettant au agents (employés) 
 10. Optional destination on congestion: Destinations optionelle en cas de congestion.
 Il vous faudras ensuite d'aller dans le sous-onglet **Dial Patterns** puis configurer comme dans le trunks (voir les explications sur le trunks).
 (voir images annexe 12)
+### Parametrer le serveur SMTP:
+Afin de pouvoir reçevoir des notifications par email en cas de probléme ou même reçevoir les message vocaux par mail nous allons devoir configurer les parametres SMTP.
+#### Se connecter en SSH:
+ Malheuresement ce paramétre ne ce fais pas par l'interface mais par terminal de commande nous allons donc devoir se connecter en ssh. Pour ce faire, dans votre terminal, taper la commande suivante:
+`ssh nomdutilisateur@adresseduserveur` une fois cela fait, il vous faudra entrer un mot de passe. *note: il s'agit du mots de passe que vous avez entrer sur le terminal lors du premier démarage du serveur. (voir [2. Premier démarage du serveur](#2-premier-démarage-du-serveur)). Une fois connecter en SSH vous aurez droit à affichage (voir image annexe SSH)
+#### Parametrage du SMTP:
+Une fois connecter en SSH, tapez la commande suivante `nano /etc/postfix/main.cf`, une fois cela fait vous devriez atterir sur une page ressemblant à cela (voir image annexe smtp 1). Defilez ensuite tout en bas de la page, puis entrez les lignes suivante selon le serveur SMTP auquel l'email que vous souhaitez utiliser est racrocher. 
 
+relayhost = [adresse de votre fournisseur]: 587 ou 465 (selon votre fournisseur)  
+smtp_sasl_auth_enable = yes (a renter quelque sois le fournisseur)  
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd (a renter quelque sois le fournisseur)  
+smtp_sasl_security_options = noanonymous (a renter quelque sois le fournisseur)  
+smtp_use_tls = yes (a renter quelque sois le fournisseur)  
+  
+smtp_generic_maps = hash:/etc/postfix/generic
 
+Une fois cela rentrer, faite la combinaison de touches suivante : ctrl+o. Cela aura pour effet d'écrire le fichier. (enregistrer le fichier). Maintenant que cela est fait, renter la commande suivante: `postfix reload` ce qui aura pour effet de recharger le postfix.  
+  
+ entrer en suite la commande suivante `nano /etc/postfix/sasl_passwd`, allez ensuite à la derniere ligne pour rajouter la ligne suivante:  
+  "[adresse de votre fournisseur] username:password" *note: le username correspond à l'adresse mail que vous souhaitez utiliser et le mots de passe correspond à mots de passe de l'adresse mail.  
 
+  Entrer ensuite la commande suivante: `chmod 400 /etc/postfix/sasl_passwd` cela permettra d'autoriser l'excution du fichier.  
+  Entrer ensuite la commande suivante: `postmap /etc/postfix/sasl_passwd` puis la même commande mais en rajoutant `chown` devant.  
+  Entrer ensuite la commande suivante: `systemctl reload postfix`  
+  Entrer ensuite la commande suivante: `nano /etc/postfix/generic` descender en suite tout en bas de la page.  
+    
+Puis rajouter ensuite les champs suivant:  
+  
+root emailfromaddress@real-domain.com 
+root@localhost emailfromaddress@real-domain.com 
+root@localhost.localdomain emailfromaddress@real-domain.com 
+root@freepbx emailfromaddress@real-domain.com 
+root@freepbx.localdomain emailfromaddress@real-domain.com 
+asterisk emailfromaddress@real-domain.com 
+asterisk@localhost emailfromaddress@real-domain.com 
+asterisk@localhost.localdomain emailfromaddress@real-domain.com 
+asterisk@freepbx emailfromaddress@real-domain.com 
+asterisk@freepbx.localdomain emailfromaddress@real-domain.com
+vm@asterisk emailfromaddress@real-domain.com
+  
+*notes: remplaçer emailfromaddress@real-domain.com par l'adresse mail que vous souhaitez utiliser.*  
+  
+Appuyez ensuite sur ctrl+o pour enregister. Puis faites la commande suivante: `postmap /etc/postfix/generic`.  
+Faites ensuite la commande suivante: `service postfix restart`  
+Puis celle-ci: `systemctl restart postfix`  
+
+Voilà le serveur SMTP est maintenant configurer. 
+
+### Créer une Boite Vocale:
+La boite vocale vas permettre aux appelants de pouvoir laisser un message vocal en cas de fermeture ou d'indisponibilté de l'entreprise. Pour ce faire, Créer une extensions appelé boite vocale. (voir [Créations d'extensions](#créations-dextensions))
+*note: il faudras activer et configurer les messages vocaux dans le deuxieme onglet **voicemail***. Une fois tous cela fait, rendez-vous dans l'onglet Settings puis cliquer sur **Voicemail Admin**.  
+  
+Choisissez ensuite votre extension à droite de votre écran puis si cela n'a pas était fait dans l'extension, remplisser les champs suivants:
+1. Voicemail Password: Mots de passe de la boite vocale.
+2. Email Address: Adresse email où les message vocaux seront envoyés *notes: le serveur SMTP doit être parametré pour que cet fonctionalité sois disponible*
+3. Pager Email Address: Emails où seront envoyer les notification comme quoi un message vocal à était laisser dans la boite. *notes: ce champ peut être laisser vide afin de juste reçevoir les messages vocaux sans notifications suplementaires.*
+4. Email Attachement: Attacher les messages vocaux au emails.
+5. Play CID: citer le numéro de téléphone de l'appelant dans le message vocal.
+6. Play Envelope: Citer la date et l'heure dans le message vocal.
+7. Delete Voicemail: Supprimer les message vocaux dans le serveur une fois la notification reçu.
+9. Call-Me Number: Numéro pour contacter l'extensions.
+  
+#### Configurer la forme des mails:
+1. Email Subject: sujet du mail
+2. Email Body: Corp de l'email
+3. Email From String: De qui proviens l'email
+4. Email Date Format: Format de la date
+5. Pager Subject: Sujet du mail de notification
+6. Pager Body: Corps du mail de notification
+7. Pager From String: De qui provient l'email de notification
+8. Pager Date Format: Format de la date de l'email de notification
+9. Server Email: Serveur de mail
+10. Skip PBX String: Ne pas afficher la provenance du mail
+11. Attach Voicemail: Attacher le message vocal au mail
+12. Mail Command: Spécifier la commande d'envoie d'email
+      
+
+ 
