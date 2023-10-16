@@ -29,11 +29,16 @@ Avant de commencer la configuration un mot de passe et un nom d'utilisateur nous
 - changer la configuration du clavier: "dpkg-reconfigure keyboard-configuration" *note: cette commande necessite aussi un redémarage*
 - changer le mots de passe: "passwd"
 - mettre à jour raspbx: "raspbx-upgrade"
-## 3. Configuration du serveur téléphonique
+## 3. Configuration du serveur téléphonique par interace
 Pour configurer le serveur nous allons utiliser FreePBX inclus dans l'image que nous avons installer dans la raspberry-pi.
 Pour cela nous allons nous connecter a l'interface en entrant l'ip afficher sur notre serveur cité précédament dans le navigateur.
 ### Première connection à l'interface:
-Tout d'abord, l'interface demande de se créer un compte admin en créant un identifiant et un mots de passe et entrant une adresse email afin de pouvoir reçevoir des notifications en cas de problémes.
+Tout d'abord, l'interface demande de se créer un compte admin en créant un identifiant et un mots de passe et entrant une adresse email afin de pouvoir reçevoir des notifications en cas de problémes. 
+(voir image annexe 0).
+Une fois le compte admin créer il vous faudras vous connecter en tant qu'admin.
+(voir images annexe 1 et 1-2).
+Une fois connecter sur l'interface vous aterirer sur le Dashboard qui permet d'avoir toutes les informations nécéssaire. Par exemples les erreurs, la places disponible etc...
+(voir image annexe 1-3)
 ### Installations et mises à jour de modules FreePBX <a id="IMAJ"></a>
 Certaine fonctionalité de FreePBX correspondent à des modules qui doivent être mis à jour ou installer.
 Pour ce faire, allez dans l'onglet admin et cliquer sur module admin. Une fois cela fait, cliquer sur le bouton **check online** . Suite à cela, les modules non installer apparaitrons et les modules pouvant être mis à jour seront en sur-brillance. Pour installer ou mettre à jour un module veuillez suivre la procédure ci-dessous:
@@ -42,14 +47,19 @@ Pour ce faire, allez dans l'onglet admin et cliquer sur module admin. Une fois c
 3. cliquer sur **process** en bas à droite de la page.
 4. cliquer sur **confirm**
 5. cliquer sur **apply config** en haut à droite de la page.
+(voir images annexe 2)
 ### Uploader un enregistrements personalisé:
 Pour pouvoir mettre une enregistrement personalisée aller dans l'onglet admin et cliquer sur **system recording**. Cliquer ensuite sur le bouton **add recording**. Puis donner un nom à votre enregistrement. Ajouter ensuite une description, choisissez la langue de votre enregistrement, vous pouvez soit choisir un enregistrement prédefinie soit parcourir vos fichier pour mettre un enregistrement personalisé. *note: faite attention au format de votre audio car il peut ne pas être lisble pour le serveur. Aprés chaque configuration, il faudras souvent appuyer sur **submit** puis en hauts de la page **apply config**.*
+(voir images annexe 3)
 ### Ajouter des musiques de fond:
 Les musique de fond servent à faire patienter l'appelant dans une fille d'attente ou encore un IVR. Pour rajouter une musique de fond aller dans l'onglet Settings puis **Music on Hold**. Selection ensuite la catégorie default en cliquant sur le logo de crayon ou créer en une nouvelle en appuyant sur **Add Category**. Remplisser ensuite les champs suivant:
 1. Type: Files: selectioner un ou plusieurs fichiers audio.
          Custom Application: selectioner un application diffusant de la musique.
 2. Enable Random Play: Activer la lecture aleatoire des fichier audio.
 3. Upload Recording: Si dans le champ **Type** des **Files**
+4. Convert Upload/Files to: choisir le format qu'aura votre fichier audio.
+5. File: liste des fichier audio présent *note: il y peut directement y a avoir des fichier audio préselectionner*
+(voir images annexe 4)
 ### Créer une annonce personalisée:
 *note: cela nécéssite d'avoir fait la procédure au dessus*
 Rendez-vous dans l'onglet **Applications** puis cliquer sur **Announcements** cliquer ensuite sur le bouton **Add**. Veuillez ensuite remplir les champs ci-dessous:
@@ -59,6 +69,7 @@ Rendez-vous dans l'onglet **Applications** puis cliquer sur **Announcements** cl
 4. Return to IVR: décider de si l'on peut retourner à l'IVR
 5. Answer to channel: Décider de si on peut répondre à ce canal ou non
 6. Destination: Destination aprés la lecture de l'enregistrement
+(voir images annexe 5)
 ### Création d'une file d'attente:
 Dans l'onglet application, cliquer sur **queues** appuyez ensuite sur **Add Queues**. Comme vous pourrez le constatez, il y a plusieur onglets, commençons par le premier: **General Settings**: Cela vous demandera en suite de remplir les champs suivant:
 #### Genéral setting:
@@ -83,9 +94,11 @@ Dans l'onglet application, cliquer sur **queues** appuyez ensuite sur **Add Queu
 19. Call Recording: Définir si l'appel est enregistré ou non.
 20. Mark calls answered elsewhere: si un appelant annule son appel, l'appel sera quand même marqué comme répondu.
 21. Fail Over destination: destination en cas d'echecs.
+(voir images annexe 6)
 #### Queue Agents:
 1. Static Agents: Ajouts des agents fixe concerné par la file d'attente.
 2. Dynamic Agents: Ajous d'agents temporairement concerné par la file d'attente.
+(voir image annexe 6-2)
 #### Timing & Agent Options
 1. Max Wait Time: Temps d'attente maximal
 2. Max Wait Time Mode: Si **Strict**: une fois le temps d'attente dépasse expulsion imédiate de la file d'attente.
@@ -101,11 +114,13 @@ Si **Loose**, expulsion de file d'attente si aucun agent disponible.
 11. Auto Pause on Busy: Mettre automatiquement en status pause un agent occupé.
 12. Auto Pause on Unavailable: Mettre automatiquement en status pause un agent indisponible.
 13. Auto Pause Delay: Delai de la pause automatique d'un agent.  
+(voir images annexe 6-3)
 #### Capacity Options:
 1. Max Callers: nombre d'appelant maximal dans la file d'attente
 2. Join Empty: Un appelant peut-il rejoindre la file d'attente si tous les agents sont en pause ?
 3. Leave Empty: Un appelant doit-il quitter la file d'attente si tous les agents sont en pause ?
 4. Penalty Members Limit: Limite de penalité de membre.
+(voir images annexe 6-4)
 #### Caller Announcements:
 1. Fréquency: Fréquence de l'annonce de la position de l'appelant dans la file d'attente
 2. Minimum Announcement Interval: Interval minimum entre chaque annonce.
@@ -113,11 +128,14 @@ Si **Loose**, expulsion de file d'attente si aucun agent disponible.
 4. Announce Hold Time: Annoncer le temps d'attente dans la file.
 5. IVR Break Out Menu: Integration d'un ivr afin de pouvoir quitter la file d'attente.
 6. Repeat Frequency: Fréquence de répétition de l'annonce de l'ivr.
+(voir images annexe 6-5)
 #### Advanced Options:
 1. Service Level: statistiques du temps de réponse dans la file d'attente
 2. Agent Regex Filter: filtrer les agents non concerné par la file d'attente.
+(voir images annexe 6-6)
 #### Reset Queue Stats: 
 -Stats Reset: Reinitialiser les statisques de la file d'attente.
+(voir images annexe 6-7 )
 ### Creation d'un IVR:
 L'IVR est un serveur vocal interactif par exemple: il permet à l'appelant de choisir quel service d'une entreprise il veut contacter.
 Dans l'onglet application, cliquer sur **IVR** puis **Add IVR**. Il faudra ensuite remplir les champs ci-dessous:
@@ -142,8 +160,10 @@ Dans l'onglet application, cliquer sur **IVR** puis **Add IVR**. Il faudra ensui
 19. Timeout Recording: enregistrement diffusé aprés un delai dépassé.
 20. Timeout Destination: Destination de l'appelant aprés un delai dépassé.
 22. Return to IVR after VM: retourner à l'IVR aprés un message vocal laissé par l'appelant.
+(voir images annexe 7 et 7-1)
 #### Entrée de L'IVR
 Il s'agit des touches permettant de choisir sa destination par exemple: "appuyer sur la touche 1 pour allez dans file d'attente." *notes: si vous souhaitez que l'IVR redirige automatiquement l'appelant dans une destination, selectionez directement "time out destination" pour définir un destination*
+(voir images annexe 7-2)
 ### Creation d'un time conditions:
 Le time condtions permet de rajouter un condition de temps par exemple si l'on veut que l'appelant tombe sur une messagerie vocale pendant les horraires de fermetures, on vas donc utiliser le time conditons. *notes: il est possible que vous ayez besoin d'installer le module "times conditions" (voir la procédure a suivre dans [Installations et mises à jour de modules FreePBX](#installations-et-mises-à-jour-de-modules-freepbx))*
 Une fois le module installé si nécéssaire, rendez-vous dans applications et dans **time conditions**. Appuyez sur le bouton **Add Time-condtions**. Tout comme les modules précedents, remplir le champs suivant:
@@ -155,11 +175,14 @@ Une fois le module installé si nécéssaire, rendez-vous dans applications et d
 6. Mode: Utiliser le Time Group ou utiliser le calendrier. *note: nous reviendrons a la fin de cet liste sur l'utilisation du Time Group et du Calendrier.*
 7. Destination matches: Destination ou l'appelant est dirger
 8. Destination non-matches: Destination ou l'appelant est dirgrer en cas de conditions invalides.
+(voir images annexe 8 et 8-1)
 #### Utilisation du  Time groups:
 Le time Groups permet de définir une ou plusieur periode dans la laquelle la condtions doit s'executer. Pour ce faire vous pouvez directement mettre **Time Group Mode**  dans le champs mode. Vous pourrez en suite dans le champs **Time Group** juste en dessous. définir les heures, les jours, les mois etc... .
+(voir images annexe 8-2)
 #### Utilisation du Calendar:
 Contrairement au Time groups, ce dernier nécéssite d'aller directements dans l'onglets applications, puis de cliquer sur **Calendar** cliqeur en suite sur **Add Calendar** puis sur **Add Local Calendar**. Nommer le calendrier puis mettez y une description et enfin, Selectionez votre Zone de Temps. Une fois cela fait cliquer sur **submit** puis **applyconfig**
 Une fois cela fait, la liste de vos calendrier apparaitra, cliquez sur l'icone de crayon pour le modifier. Une fois cela fait votre calendrier vas aparaître, cliquer sur le bouton en à gauche pour rajoutez un evenement puis remplisser les champs demander comme le jour, l'heure, si ce la doit se répêter etc... . Une fois cela fait vous pourrez crée votre time conditions et ainsi selectioner dans le champ mode: **Calendar Mode** et selectioner votre calendrier dans le champs en-dessous. *tips: il est préférable de faire un time groups pour programmer des horraires habituelles et d'utiliser le calendrier pour programmer un evenement tel qu'un rdv*.
+(voir images annexe 8-3)
 ### Créations d'extensions:
 Les extensions permettent de rajouter des téléphones pour les agents (Les téléphones des employées afin de pouvoir répondre et passer des appels ). Dans notre cas nous allons utiliser l'application mobile **Zoiper**. Cette application permet d'avoir un téléphone virtuel sur un téléphone portable ou sur pc afin de ne pas avoir a acheter de téléphone fixe.
 #### Ajouts d'extensions: 
@@ -176,6 +199,7 @@ Pour se faire, allez dans l'onglet applications puis cliquez sur **Extension** c
 9. Username: Nom d'utilisateur
 10. Password for new user: Mots de passe en cas de création de compte.
 11. Groups: Définir un groupes d'utilisateur.
+(voir images annexe 9)
 #### Voicemail: 
 1. Enable: activer les messages vocaux
 2. Voicemail Password: Mots de passe pour accèder au système de messages vocaux.
@@ -189,9 +213,11 @@ Pour se faire, allez dans l'onglet applications puis cliquez sur **Extension** c
 10. Delete Voicemail: Supprimer les messages vocaux aprés avoir était envoyé par email.
 11. VM Options: Options a rajouter 
 12. VM Context: Contexte des messages vocaux *notes: Attention modifier ce paramètre peut être risquer* 
+(voir images annexe 9-1)
 #### Utilisation de zoiper
 Pour commencer installer Zoiper sur votre Pc en suivant ce lien: https://www.zoiper.com/en/voip-softphone/download/current ou sur votre téléphone en passant par le appstore ou le play store en passant celon votre OS.
 Une fois Zoiper installé, une connexion vous sera demander. *Attention: ne pas créer de compte car cela nécistera d'acheter un fournisseur.* Choisissez donc l'option se connecter, mettez dans nom d'utilisateur votre extension créer sur l'interface suivi d'un @ et de votre serveur sip (mettez l'ip qui correspond a votre serveur). Voici un exemple: extensions@192.168.0.10 . Pour le mots de passe, mettez celui que vous avez mis dans le champs **secret** de votre extension. Une fois cela fait, l'application vas rechercher votre serveur afin de s'y connecter. *note: il se peut que votre application ne se connecte pas au serveur car vous n'avez pas changer le mots de passe de votre extensions*
+(voir images annexe 9-2)
 ### Créer un trunks: 
 Les trunks Permettent d'acheminer les appels entrants et sortants. Il existent plusieurs protocoles de trunks tous commes les extensions. Dans notre cas, nous allons choisir le protocoles **SIP** tout comme nos extensions. Pour ce faire rendez-vous dans connectivity, choisissez ensuite **trunks** puis cliquez sur **Add Trunk** puis **Add SIP (chang_pjsip) Trunk**. Voici ensuite les champs suivants à remplir selon ce la ligne que vous à fourni votre fournisseur:
 #### General: 
@@ -204,8 +230,10 @@ Les trunks Permettent d'acheminer les appels entrants et sortants. Il existent p
 7. Continue if Busy: En cas d'echec continuer vers le trunk suivant.
 8. Disable Trunk: Desactiver le trunk
 9. Monitor Trunk Failures: Script pour envoyer des logs par email en cas de problémes.
+(voir images annexe 10)
 #### Dialed Number Manipulation Rules: 
 Cet onglet s'apparante au régles de composition des numéro ici nous allons entrer les numéro d'urgence a mettre afin que l'entreprise puis appeler ces derniers en cas d'urgences. Une fois dans cet Onglets, cliquer sur le bouton **Dial patterns wizards** une fois cela fait une page s'ouvrira. Selectionnez uniquement **10 Digit Patterns** puis cliquer sur Generate Routes en bas à droite. Une fois cela fait vous verrez que des routes d'urgences ce sont genérer avec des numéros d'urgence provenat des états unis remplacez-les par les numéro d'urgence français puis dans la dernier case remplisser la case préfixe à gauche par un nombre au hazard puis mettez 10 X correspondant au nombre de chiffre dans un numéros Français.
+(voir images annexe 10-1)
 #### pjsip Settings: 
 1. Username: Nom d'utilisateur *note: cela doit corespondre à un série de chiffre comme ceci: 0033XXXXXXXXXX
 2. Auth username: nom d'autentification *notes: à ne remplir uniquement si cela diffère du nom d'utilisateur*
@@ -217,6 +245,7 @@ Cet onglet s'apparante au régles de composition des numéro ici nous allons ent
 8. SIP Server Port: Port d'ecoute de votre serveur SIP.
 9. Context: Context à envoyer à l'appel entrant. *note: pour une bon fonction: mettre "from-pstn-toheader"
 10. Transport: Le transport utiliser à la connection.
+(voir images annexe 10-2)
 ### Créer une inbound route: 
 Une inbound routes est une routes entrante ou arriveront les appel qui viennent de l'exterieur. Exemple d'utilisation: l'appelant arrive sur un ivr quand il l'appele le numéro associé. Rendez vous dabord dans connectivity puis ensuite **Inbounds Routes** Puis **Add Inbounds Routes**, remplisser les champs suivants:
 1. Description: description de la route.
@@ -228,6 +257,7 @@ Une inbound routes est une routes entrante ou arriveront les appel qui viennent 
 7. CID name prefix: Définir un préfix au numéro des appelants par exemple: Boutique: John.
 8. Music on Hold: definir la musique en fond.
 10. Set destination: destination de la route entrante. *note: si vous voulez que la destination dépande des horraire mettez votre time condition qui redirigera l'appelant en fonction de l'heure.*
+(voir images annexe 11)
 ### Créer une outbound route: 
 Une outbound route est une une route de sortie permettant au agents (employés) d'appeler des personne exterieure. Par exemple permettre à un employé d'appeler un clients. Pour cela dans l'onglet Connectivity cliquer sur **Outbounds Routes** puis cliquer sur **Add Outbonds Routes**. Remplisser ensuite les champs suivants:
 1. Route Name: Sortie
@@ -235,6 +265,13 @@ Une outbound route est une une route de sortie permettant au agents (employés) 
 3. Override Extensions: Remplacer le numéro de l'extension de l'agent affiché lors d'un appel par le numéro de la route sortante.
 4. Route Password: mots de passe à définir pour faire un appel sortant (non obligatoire)
 5. Route Type: Type de la route: route d'urgence ou route intra-Companie
-6. Music on hold?: Musique en fond à définir (voir)
+6. Music on hold?: Musique en fond à définir.
+7. Time match Zone: Zone de temps correspondante.
+8. Time match time group: Groupe de temps correspondant. (peut être laisser vide)
+9. Trunk Sequence for Matched Routes: Trunk correspondant aux routes.
+10. Optional destination on congestion: Destinations optionelle en cas de congestion.
+Il vous faudras ensuite d'aller dans le sous-onglet **Dial Patterns** puis configurer comme dans le trunks (voir les explications sur le trunks).
+(voir images annexe 12)
+
 
 
