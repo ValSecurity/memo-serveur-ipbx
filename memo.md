@@ -1,6 +1,8 @@
 # Creation d'un serveur IPBX
 Voici un memo pour la configuration d'un serveur IPBX sous asterisk et FreePBX
+Il est possible d'installer FreePBX sur un raspberry-pi mais je vous conseille de l'installer sur un serveur loué.
 ## 1. installation du serveur sur raspberry-pi
+*note il est possible d'avoir des problémes de version en l'installant sur une raspberry-pi*
 Pour commencer il faut installer notre serveur sur la raspberry.
 ### Materiel necessaire:
 - une rapsberry-pi 
@@ -23,12 +25,12 @@ Avant de commencer la configuration un mot de passe et un nom d'utilisateur nous
 - mot de passe: "raspbx"
 *note: il est possible de se connecter a distance au serveur en ssh en utilisant le même identifant et le même mot de passe. Mais il sera préférable de regenérer un nouvelle clés par la suite en utilisant cette commande: "regen-hostkeys"*
 ### Liste des commandes de configurations:
-- afficher la configuration de la région: "locale" ou "locale -a"
-- reconfigurer la region: "dpkg-reconfigure-locales" *notes: pour cette reconfiguration sois  prise en compte, il faudra redémarrer raspbx.*
-- redémarrer raspbx: "shutdown -r now"
-- changer la configuration du clavier: "dpkg-reconfigure keyboard-configuration" *note: cette commande necessite aussi un redémarage*
-- changer le mots de passe: "passwd"
-- mettre à jour raspbx: "raspbx-upgrade"
+- afficher la configuration de la région: `locale` ou `locale -a`
+- reconfigurer la region: `dpkg-reconfigure-locales` *notes: pour cette reconfiguration sois  prise en compte, il faudra redémarrer raspbx.*
+- redémarrer raspbx: `shutdown -r now`
+- changer la configuration du clavier: `dpkg-reconfigure keyboard-configuration` ou `system-config-keyboard` selon la version de FreePBX. *note: cette commande necessite aussi un redémarage* 
+- changer le mots de passe: `passwd`
+- mettre à jour raspbx: `raspbx-upgrade`
 ## 3. Configuration du serveur téléphonique par interace
 Pour configurer le serveur nous allons utiliser FreePBX inclus dans l'image que nous avons installer dans la raspberry-pi.
 Pour cela nous allons nous connecter a l'interface en entrant l'ip afficher sur notre serveur cité précédament dans le navigateur.
@@ -280,7 +282,7 @@ Afin de pouvoir reçevoir des notifications par email en cas de probléme ou mê
 #### Parametrage du SMTP:
 Une fois connecter en SSH, tapez la commande suivante `nano /etc/postfix/main.cf`, une fois cela fait vous devriez atterir sur une page ressemblant à cela (voir image annexe smtp 1). Defilez ensuite tout en bas de la page, puis entrez les lignes suivante selon le serveur SMTP auquel l'email que vous souhaitez utiliser est racrocher. 
 
-relayhost = [adresse de votre fournisseur]: 587 ou 465 (selon votre fournisseur)  
+relayhost = [adresse de votre fournisseur]: 587 ou 465 (selon votre fournisseur)  (ne pas mettre d'espace entre les : et le port)
 smtp_sasl_auth_enable = yes (a renter quelque sois le fournisseur)  
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd (a renter quelque sois le fournisseur)  
 smtp_sasl_security_options = noanonymous (a renter quelque sois le fournisseur)  
@@ -291,26 +293,26 @@ smtp_generic_maps = hash:/etc/postfix/generic
 Une fois cela rentrer, faite la combinaison de touches suivante : ctrl+o. Cela aura pour effet d'écrire le fichier. (enregistrer le fichier). Maintenant que cela est fait, renter la commande suivante: `postfix reload` ce qui aura pour effet de recharger le postfix.  
   
  entrer en suite la commande suivante `nano /etc/postfix/sasl_passwd`, allez ensuite à la derniere ligne pour rajouter la ligne suivante:  
-  "[adresse de votre fournisseur] username:password" *note: le username correspond à l'adresse mail que vous souhaitez utiliser et le mots de passe correspond à mots de passe de l'adresse mail.  
+  "[adresse de votre fournisseur]:port username:password" *note: le username correspond à l'adresse mail que vous souhaitez utiliser et le mots de passe correspond à mots de passe de l'adresse mail.  
 
   Entrer ensuite la commande suivante: `chmod 400 /etc/postfix/sasl_passwd` cela permettra d'autoriser l'excution du fichier.  
-  Entrer ensuite la commande suivante: `postmap /etc/postfix/sasl_passwd` puis la même commande mais en rajoutant `chown` devant.  
+  Entrer ensuite la commande suivante: `postmap /etc/postfix/sasl_passwd` puis la même commande mais en rajoutant `chown postfix` devant à la place de postmap.  
   Entrer ensuite la commande suivante: `systemctl reload postfix`  
   Entrer ensuite la commande suivante: `nano /etc/postfix/generic` descender en suite tout en bas de la page.  
     
 Puis rajouter ensuite les champs suivant:  
   
-root emailfromaddress@real-domain.com 
-root@localhost emailfromaddress@real-domain.com 
-root@localhost.localdomain emailfromaddress@real-domain.com 
-root@freepbx emailfromaddress@real-domain.com 
-root@freepbx.localdomain emailfromaddress@real-domain.com 
-asterisk emailfromaddress@real-domain.com 
-asterisk@localhost emailfromaddress@real-domain.com 
-asterisk@localhost.localdomain emailfromaddress@real-domain.com 
-asterisk@freepbx emailfromaddress@real-domain.com 
-asterisk@freepbx.localdomain emailfromaddress@real-domain.com
-vm@asterisk emailfromaddress@real-domain.com
+root emailfromaddress@real-domain.com  
+root@localhost emailfromaddress@real-domain.com   
+root@localhost.localdomain emailfromaddress@real-domain.com   
+root@freepbx emailfromaddress@real-domain.com  
+root@freepbx.localdomain emailfromaddress@real-domain.com   
+asterisk emailfromaddress@real-domain.com   
+asterisk@localhost emailfromaddress@real-domain.com c  
+asterisk@localhost.localdomain emailfromaddress@real-domain.com   
+asterisk@freepbx emailfromaddress@real-domain.com   
+asterisk@freepbx.localdomain emailfromaddress@real-domain.com  
+vm@asterisk emailfromaddress@real-domain.com  
   
 *notes: remplaçer emailfromaddress@real-domain.com par l'adresse mail que vous souhaitez utiliser.*  
   
@@ -347,6 +349,32 @@ Choisissez ensuite votre extension à droite de votre écran puis si cela n'a pa
 10. Skip PBX String: Ne pas afficher la provenance du mail
 11. Attach Voicemail: Attacher le message vocal au mail
 12. Mail Command: Spécifier la commande d'envoie d'email
-      
+*Voir image annexe VM-Forme mail pour avoir un example*
+  
+### Activer le let's encrypt
+*note: ceci n'est possible qu'avec une version distro de FreePBX avec un compte d'activé (version officielle) et nécéssitera aussi d'avoir la résolution de nom de votre serveur*
+Le let's encrypt permet de sécuriser votre interface web cet à dire de la passer de **http** à **https**.
+Pour ce faire, rendez-vous dans l'onglet Admin puis **System Admin** puis selectionnez **port management** à droite de votre écran.
+Une fois cela fait, vous atterirez sur une page vous permettant de définir les ports correspondant à différentes pages. (voir image annexe let's encrypt ey let's encrypt 1 ).
+Remplacer le port admin 80 par le port 8080, ensuite mettez le port 80 dans le **LetsEncrypt**.  
+Une fois cela fait, cliquer sur le bouton **Update Now** en bas à droite de la page.  
+Rendez vous ensuite toujours dans l'onglet admin, **Certificate Management**. (voir image annexe let's encrypt 2).
+Une fois sur cette page cliquer sur le bouton  **New Certificate**. Puis remplisser les champs suivant:  
+  
+1. Certficate Host Name: L'adresse de votre interface.
+2. Owners Email: Email du propriétaire du certificat.
+3. Country: Votre pays.
+4. State/Province/Region: votre région.
+5. Alternatives Names: Noms alternatifs qui peuvent être résolu par les dns publiques.
+6. Challenge Over: à ne pas toucher il s'agit du port que vas utiliser le let's encrypt qui sera toujours le port 80.
+7. Remove DST Root CA X3: Supprime DST Root CA X3 du certificat.
+Une fois tous ces champs remplis, cliquer sur **generate certificate** en bas à droite de votre écran.
+(voir image annexe let's encrypt 2-1)
+  
+Une fois tout cela fait cocher la case défault de votre nouveau certificat (voir image annexe let's encrypt 2). *note: le nouveau certificate aura le nom de l'adresse de votre interface, ce qui n'est pas afficher sur l'image annexe pour des raisons de sécurité*  
+  
+Pour finir, retournez dans **system admin**, puis cliquer sur **HTTPS Setup** à droite de votre écran. (voir image annexe let's encrypt 3). *note: l'image annexe est volontairement incomplète pour des raison de sécurité mais cela n'empechera empechera pas de vous guider*   
+Une fois sur cette page, selectionner votre nouveau certificat puis cliquer sur le bouton **install** juste en dessous. Pour finir descender en bas de la page et cliquer sur **Save and Restart Apache** (voir image annexe let's encrypt 3-1).  
+  
+Le **Let's encrypt** est désormé activé vous pouvez rajoutez le **s** à http dans votre barre url.
 
- 
