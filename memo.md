@@ -378,3 +378,25 @@ Une fois sur cette page, selectionner votre nouveau certificat puis cliquer sur 
   
 Le **Let's encrypt** est désormé activé vous pouvez rajoutez le **s** à http dans votre barre url.
 
+## 4. Erreurs connues et corrigeables:
+
+### ARI Username and Password error: 
+Cette erreur peut être considérer comme une grosse faille de sécurité, en effet il s'agit d'un nom d'utilisateur et d'un mots passe trop faible pour la page user pannel de votre FreePBX. Cette erreur sera apparante sur le dashboard de votre interface. (voir image annexe error ari).  
+  
+Pour corriger cette erreur, il vas falloir se connecter en ssh puis taper les commandes suivantes:  
+`passwd ARI-USERNAME [nom d'utilistateur]`
+`passwd ARI-PASSWORD [mots de passe]`
+Puis recharger votre serveur avec la commande suivante: `systemctl reload`.  
+  
+### Transfert d'appel avec *2extensions ou ##extensions ne fonctionne pas:
+Il faut deja savoir la différence entre ***2** et **##**.  
+Le ***2** Permet de faire une transfert en attente (cet à dire de pouvoir contacter l'agent à qui vous souhaitez transfert l'appel avant le transfert.).    
+Le **##** Permet de faire un transfert à l'aveugle ou direct (cet à dire de ne pas contacter l'agent avant.)
+  
+Pour régler ce problème, verifé dans l'onglet admin puis **Codes Features** si les touches en question sont bien actviées.  
+Verifier ensuite dans **advanced settings** que les transferts d'appels entrants soient bien authorisés.
+
+
+
+
+
